@@ -92,7 +92,7 @@ namespace btcchina_websocket_api
                 {
                     Console.WriteLine("Ping Timeout!");
                 }
-            }, null, wsc.pingTimeout, Timeout.Infinite);
+            }, null, Timeout.Infinite, Timeout.Infinite);
 
             pingIntervalTimer = new Timer(_ =>
             {
