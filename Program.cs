@@ -157,7 +157,7 @@ namespace btcchina_websocket_api
                                     break;
                                 case socketioMessageType.EVENT:
                                     if (e.Message.Substring(4, 5) == "trade")//listen on "trade"
-                                        Console.WriteLine(e.Message.Substring(e.Message.IndexOf('{') + 1, e.Message.LastIndexOf('}') - e.Message.IndexOf('{') - 1));
+                                        Console.WriteLine(e.Message.Substring(e.Message.IndexOf('{'), e.Message.LastIndexOf('}') - e.Message.IndexOf('{') + 1));
                                     break;
                                 default:
                                     Console.WriteLine("error switch socket.io messagetype:" + e.Message);
