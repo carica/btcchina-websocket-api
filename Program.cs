@@ -29,8 +29,10 @@ namespace btcchina_websocket_api
              * Pings server every "pingInterval" and expects response
              * within "pingTimeout" or closes connection.
              * 
-             * client send ping, waiting for server's pong.
+             * client sends ping, waiting for server's pong.
              * socket.io message type is not necessary in ping/pong.
+             * 
+             * client sends pong after receiving server's ping.
              */
             PING = 2,
             PONG = 3,
@@ -79,6 +81,7 @@ namespace btcchina_websocket_api
             }
             string config = polling.Substring(polling.IndexOf('{'), polling.IndexOf('}') - polling.IndexOf('{') + 1);
             wsConfigHelper wsc = JsonConvert.DeserializeObject<wsConfigHelper>(config);
+
             #endregion handshake
 
             //set timers
@@ -139,6 +142,9 @@ namespace btcchina_websocket_api
             {
                 switch ((engineioMessageType)eioMessageType)
                 {
+                    case engineioMessageType.PING:
+                        btc.Send(string.Format("{0}", (int)engineioMessageType.PONG));
+                        break;
                     case engineioMessageType.PONG:
                         pong = true;
                         break;
