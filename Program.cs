@@ -143,7 +143,8 @@ namespace btcchina_websocket_api
                 switch ((engineioMessageType)eioMessageType)
                 {
                     case engineioMessageType.PING:
-                        btc.Send(string.Format("{0}", (int)engineioMessageType.PONG));
+                        //replace incoming PING with PONG in incoming message and resend it.
+                        btc.Send(string.Format("{0}{1}", (int)engineioMessageType.PONG, e.Message.Substring(1, e.Message.Length - 1)));
                         break;
                     case engineioMessageType.PONG:
                         pong = true;
